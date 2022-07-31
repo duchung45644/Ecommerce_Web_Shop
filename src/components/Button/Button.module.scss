@@ -1,0 +1,82 @@
+.wrapper {
+    color: var(--white);
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: hidden;
+
+    position: relative;
+
+    .inner {
+        transition: 0.3s ease-in-out;
+        display: flex;
+
+        .icon-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transform: translateX(-100%);
+
+            .icon {
+                margin: auto;
+                font-size: 2rem;
+                color: var(--white);
+                animation: tada 1.5s ease infinite;
+            }
+        }
+
+        .title {
+            padding: 9px 20px;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &.withIcon:hover {
+        .inner {
+            transform: translateX(100%);
+        }
+    }
+}
+
+.large {
+    .inner {
+        .icon-wrapper {
+            .icon {
+                font-size: 2rem;
+            }
+        }
+
+        .title {
+            font-size: 1.9rem;
+            padding: 13px 26px;
+        }
+    }
+}
+
+@keyframes tada {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+
+    10%,
+    20% {
+        transform: scale3d(0.95, 0.95, 0.95) rotate3d(0, 0, 1, -10deg);
+    }
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 10deg);
+    }
+    40%,
+    60%,
+    80% {
+        transform: rotate3d(0, 0, 1, -10deg);
+    }
+    100% {
+        transform: scale3d(1, 1, 1);
+    }
+}

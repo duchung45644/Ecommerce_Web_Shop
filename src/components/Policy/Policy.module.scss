@@ -1,0 +1,49 @@
+.wrapper {
+    display: flex;
+
+    .inner {
+        margin: auto;
+        width: var(--default-layout-width);
+    }
+}
+.policy-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    padding-left: 0;
+    box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    transition: transform 0.5s ease;
+
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-20px);
+        .infor {
+            h2 {
+                color: var(--color-blue);
+            }
+        }
+    }
+
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40%;
+        color: #4267b2;
+        font-size: 3.9rem;
+    }
+
+    .infor {
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1.3rem;
+            color: #8d8d8d;
+        }
+    }
+}

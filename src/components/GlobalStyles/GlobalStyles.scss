@@ -1,0 +1,124 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;900&display=swap');
+
+:root {
+    --font-family: 'Roboto', sans-serif;
+    --primary: #fe2c55;
+    --black: #000;
+    --white: #fff;
+    --default-text-color: #161823;
+    --color-blue: #4366af;
+    --color-pink: #fe7e73;
+    --color-orange: #fbb96b;
+
+    // Default layout
+    --default-layout-header-height: 90px;
+    --header-shrink-height: 60px;
+    --header-mobile-height: 40px;
+    --default-layout-width: 1350px;
+    --default-layout-horizontal-spacer: 24px;
+
+    // background color
+    --default-background-color: #fff;
+    --bg-blue: #4366af;
+    --bg-pink: #fe7e73;
+    --bg-orange: #fbb96b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizespeed;
+    color: var(--default-text-color);
+    overflow-y: overlay;
+}
+
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+a {
+    color: var(--default-text-color);
+    text-decoration: none;
+
+    &:hover {
+        color: #7d95cc;
+    }
+}
+
+ul {
+    list-style: none;
+}
+
+.bg-blue {
+    background: #4366af;
+}
+.bg-pink {
+    background: #fe7e73;
+}
+.bg-orange {
+    background: #fbb96b;
+}
+
+.color-blue {
+    color: #4366af;
+}
+.color-pink {
+    color: #fe7e73;
+}
+.color-orange {
+    color: #fbb96b;
+}
+
+.section {
+    width: 100%;
+    margin-bottom: 80px;
+
+    .section-title {
+        font-size: 2.6rem;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .section-body {
+        margin: auto;
+        margin-top: 70px;
+        padding: 10px;
+    }
+}
+
+.grid {
+    display: grid;
+    gap: 20px;
+}
+.col-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Tablet: 790px <= width < 1024 */
+@media only screen and (min-width: 790px) and (max-width: 1023px) {
+    .col-md-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile: width < 790px */
+@media only screen and (max-width: 789px) {
+    .col-sm-1 {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
