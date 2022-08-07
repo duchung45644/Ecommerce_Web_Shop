@@ -1,0 +1,33 @@
+.wrapper {
+    padding-top: 50px;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(51, 51, 51, 0.332);
+    display: flex;
+    overflow: auto;
+
+    &.remove {
+        display: none;
+    }
+}
+
+.inner {
+    margin: auto;
+    min-width: 400px;
+    max-width: 50%;
+    min-height: 300px;
+    background-color: var(--white);
+    position: relative;
+    padding: 10px;
+    padding-top: 30px;
+}
+
+.btn-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
