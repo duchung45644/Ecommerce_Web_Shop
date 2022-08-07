@@ -45,22 +45,16 @@ function Header() {
             }
         };
 
-        const handleResize = () => {
-            if (window.innerWidth < 1024) {
-                headerRef.current.classList.add(cx('shrink'));
-            } else {
-                headerRef.current.classList.remove(cx('shrink'));
-            }
-        };
-
         window.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleResize);
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
 
     const menuToggle = () => menuRef.current.classList.toggle(cx('active'));
 

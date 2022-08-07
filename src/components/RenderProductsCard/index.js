@@ -7,11 +7,21 @@ import productData from '~/assets/fake-data/products';
 
 const cx = classNames.bind(styles);
 
-function RenderProductsCard({ numberProduct }) {
-    let data = productData.getProducts(numberProduct);
+function RenderProductsCard({ data, numberProduct, all, slug, cartItems, col }) {
+    if (numberProduct) {
+        data = productData.getProducts(numberProduct);
+    } else if (all) {
+        data = productData.getAllProducts();
+    } else if (slug) {
+        data = [productData.getProductBySlug(slug)];
+    }
+
+    if (!col) {
+        col = 4;
+    }
 
     return (
-        <div className={cx('wrapper', 'grid', 'col-4', 'col-md-2', 'col-sm-1')}>
+        <div className={cx('wrapper', 'grid', `col-${col}`, 'col-md-2', 'col-sm-1')}>
             {data.map((item, index) => (
                 <ProductCard key={index} data={item} />
             ))}
@@ -21,7 +31,9 @@ function RenderProductsCard({ numberProduct }) {
 
 // propTypes để ràng buộc dữ liệu
 RenderProductsCard.propTypes = {
-    numberProduct: PropTypes.number.isRequired,
+    data: PropTypes.array,
+    numberProduct: PropTypes.number,
+    slug: PropTypes.string,
 };
 
 export default RenderProductsCard;

@@ -1,3 +1,7 @@
+.wrapper ~ .wrapper {
+    margin-left: 15px;
+}
+
 .wrapper {
     color: var(--white);
     text-transform: uppercase;

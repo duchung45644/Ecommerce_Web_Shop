@@ -1,19 +1,19 @@
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
 
 import styles from './Home.module.scss';
 import midBanner from '~/assets/images/banner.png';
-
 import Banner from '~/components/Banner';
 import bannerSlider from '~/assets/fake-data/banner-slider';
 import Policy from '~/components/Policy';
 import policy from '~/assets/fake-data/policy';
-
 import RenderProductsCard from '~/components/RenderProductsCard';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Home() {
+    document.title = 'Yolo';
+
     return (
         <div className={cx('wrapper')}>
             <Banner className={cx('banner-slider')} data={bannerSlider}></Banner>

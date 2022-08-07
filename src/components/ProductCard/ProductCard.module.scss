@@ -52,6 +52,12 @@
     .price {
         font-size: 2rem;
         margin-top: 10px;
+
+        .new-price {
+            font-weight: 600;
+            color: #000;
+        }
+
         .old-price {
             color: #8d8d8d;
             text-decoration: line-through;
