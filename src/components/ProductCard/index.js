@@ -45,7 +45,7 @@ function ProductCard({ data }) {
             <Button
                 onClick={() => setModalStatus(true)}
                 icon={<FontAwesomeIcon icon={faCartShopping} />}
-                className={cx(`bg-blue`)}
+                className={cx('bg-blue', 'card-btn')}
             >
                 Chọn mua
             </Button>

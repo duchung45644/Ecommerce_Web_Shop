@@ -6,6 +6,7 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import styles from './ProductView.module.scss';
 import Button from '~/components/Button';
 import priceFormat from '~/utils';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +18,7 @@ function ProductView({ product }) {
     const [quantity, setQuantity] = useState();
     const descRef = useRef();
     const descMobileRef = useRef();
+    let navitgate = useNavigate();
 
     const toggleDesc = () => {
         setDescBtn(!descBtn);
@@ -46,6 +48,33 @@ function ProductView({ product }) {
         return true;
     };
 
+    const addToLocalStorage = (data) => {
+        // Get products cart from localStorage
+        const storageProducts = JSON.parse(localStorage.getItem('products')) ?? [];
+        let duplicate = false;
+
+        if (storageProducts.length === 0) {
+            storageProducts.push(data);
+        } else {
+            for (let i = 0; i < storageProducts.length; i++) {
+                const product = storageProducts[i];
+                if (product.slug === data.slug && product.color === data.color && product.size === data.size) {
+                    product.quantity += data.quantity;
+                    duplicate = true;
+                    break;
+                }
+            }
+
+            if (!duplicate) {
+                storageProducts.push(data);
+            }
+        }
+
+        // Save to the localStorage
+        const newProduct = JSON.stringify(storageProducts);
+        localStorage.setItem('products', newProduct);
+    };
+
     const addToCart = () => {
         if (check()) {
             let newItem = {
@@ -57,13 +86,35 @@ function ProductView({ product }) {
             };
 
             if (newItem) {
-                console.log(newItem);
+                addToLocalStorage(newItem);
+
                 alert('Đã thêm vào giỏ hàng');
             } else {
                 alert('Thêm sản phẩm thất bại');
             }
         }
     };
+
+    const goToCart = () => {
+        if (check()) {
+            let newItem = {
+                slug: product.slug,
+                color: color,
+                size: size,
+                price: product.price,
+                quantity: quantity,
+            };
+
+            if (newItem) {
+                addToLocalStorage(newItem);
+
+                navitgate('/cart');
+            } else {
+                alert('Thêm sản phẩm thất bại');
+            }
+        }
+    };
+
     useEffect(() => {
         setMainImg(product.image01);
         setColor(undefined);
@@ -76,64 +127,18 @@ function ProductView({ product }) {
             <div className={cx('inner')}>
                 <div className={cx('images')}>
                     <div className={cx('images-list')}>
-                        <img src={product.image01} onClick={() => setMainImg(product.image01)} />
-                        <img src={product.image02} onClick={() => setMainImg(product.image02)} />
+                        <img src={product.image01} onClick={() => setMainImg(product.image01)} alt="hehe" />
+                        <img src={product.image02} onClick={() => setMainImg(product.image02)} alt="hehe" />
                     </div>
                     <div className={cx('main-image')}>
-                        <img src={mainImg} />
+                        <img src={mainImg} alt="hehe" />
                     </div>
                     <div ref={descRef} className={cx('description')}>
                         <div className={cx('desc-title')}>Chi tiết sản phẩm</div>
-                        <div className={cx('desc-content')}>
-                            <p>
-                                Sự hiện diện của những chiếc áo thun basic cổ tròn trong tủ đồ của bạn chính là chìa
-                                khóa giúp cho bạn có thêm nhiều outfit thú vị mà lại không cần đến quá nhiều món đồ. Áo
-                                thun nữ cotton cổ tròn basic chính là vũ khí tiện dụng cho các chị em trong trang phục
-                                hàng ngày!
-                            </p>
-                            <br />
-                            <br />
-                            <p>
-                                Thiết kế đơn giản, form dáng tiện lợi của áo thun PPN4502. Tại sao chỉ với 1 chiếc áo
-                                thun nữ basic mà bạn có thể phối với 10 bộ độ khác nhau? Câu trả lời nằm ở chính sự đơn
-                                giản của chúng. Càng đơn giản, bạn lại càng dễ mix &amp; match với những món đồ khác
-                                nhau.Áo thun nữ PPM4502 có thiết kế cổ tròn đơn giản, nhẹ nhàng tôn da. Tay cáo, form áo
-                                cũng không hề cầu kỳ, rất dễ mặc với nhiều thân hình khác nhau. Đặc biệt hơn, màu sắc
-                                của chiếc áo phông nữ cổ tròn này cũng rất nhã nhặn, trung tính, trơn màu. Sự tối giản
-                                từ thiết kế, đường may đến bảng màu giúp các chị em không cần đắn đo quá nhiều khi lựa
-                                chọn. Chất liệu cotton 95% được xử lý nghiêm ngặt, quy trình và công nghệ hiện đại nên
-                                mang tới cho chiếc áo sự thoải mái, mềm mại, thoáng mát ngay khi chạm vào. Cùng với đó,
-                                áo thun nữ cotton cổ tròn Yody có khả năng thâm shuts mồ hôi rất tốt nên người mặc không
-                                bị cảm giác bí bách, dính dính trên da khi đổ mồ hôi vào mùa hè. Bên cạnh đó, sản phẩm
-                                cũng chưa 5% spandex - loại sợi giúp co giãn, đàn hồi hiệu quả thích hợp mặc tới nhiều
-                                môi trường, ngay cả khi vận động{' '}
-                            </p>
-                            <br />
-                            <br />
-                            <p>
-                                Sự hiện diện của những chiếc áo thun basic cổ tròn trong tủ đồ của bạn chính là chìa
-                                khóa giúp cho bạn có thêm nhiều outfit thú vị mà lại không cần đến quá nhiều món đồ. Áo
-                                thun nữ cotton cổ tròn basic chính là vũ khí tiện dụng cho các chị em trong trang phục
-                                hàng ngày!
-                            </p>
-                            <br />
-                            <br />
-                            <p>
-                                Thiết kế đơn giản, form dáng tiện lợi của áo thun PPN4502. Tại sao chỉ với 1 chiếc áo
-                                thun nữ basic mà bạn có thể phối với 10 bộ độ khác nhau? Câu trả lời nằm ở chính sự đơn
-                                giản của chúng. Càng đơn giản, bạn lại càng dễ mix &amp; match với những món đồ khác
-                                nhau.Áo thun nữ PPM4502 có thiết kế cổ tròn đơn giản, nhẹ nhàng tôn da. Tay cáo, form áo
-                                cũng không hề cầu kỳ, rất dễ mặc với nhiều thân hình khác nhau. Đặc biệt hơn, màu sắc
-                                của chiếc áo phông nữ cổ tròn này cũng rất nhã nhặn, trung tính, trơn màu. Sự tối giản
-                                từ thiết kế, đường may đến bảng màu giúp các chị em không cần đắn đo quá nhiều khi lựa
-                                chọn. Chất liệu cotton 95% được xử lý nghiêm ngặt, quy trình và công nghệ hiện đại nên
-                                mang tới cho chiếc áo sự thoải mái, mềm mại, thoáng mát ngay khi chạm vào. Cùng với đó,
-                                áo thun nữ cotton cổ tròn Yody có khả năng thâm shuts mồ hôi rất tốt nên người mặc không
-                                bị cảm giác bí bách, dính dính trên da khi đổ mồ hôi vào mùa hè. Bên cạnh đó, sản phẩm
-                                cũng chưa 5% spandex - loại sợi giúp co giãn, đàn hồi hiệu quả thích hợp mặc tới nhiều
-                                môi trường, ngay cả khi vận động
-                            </p>
-                        </div>
+                        <div
+                            className={cx('desc-content')}
+                            dangerouslySetInnerHTML={{ __html: product.description }}
+                        ></div>
                         <div className={cx('toggle-desc')}>
                             <Button className="bg-blue" onClick={toggleDesc}>
                                 {descBtn ? 'Thu gọn' : 'Xem thêm'}
@@ -190,17 +195,10 @@ function ProductView({ product }) {
                     </div>
                     <div className={cx('infor-item')}>
                         <div className={cx('item-list')}>
-                            <Button
-                                large
-                                className="bg-blue"
-                                onClick={() => {
-                                    check();
-                                    addToCart();
-                                }}
-                            >
+                            <Button large className="bg-blue" onClick={() => addToCart()}>
                                 Thêm vào giỏ
                             </Button>
-                            <Button large className="bg-blue">
+                            <Button large className="bg-blue" onClick={() => goToCart()}>
                                 Mua ngay
                             </Button>
                         </div>
@@ -209,52 +207,7 @@ function ProductView({ product }) {
 
                 <div ref={descMobileRef} className={cx('description', 'mobile')}>
                     <div className={cx('desc-title')}>Chi tiết sản phẩm</div>
-                    <div className={cx('desc-content')}>
-                        <p>
-                            Sự hiện diện của những chiếc áo thun basic cổ tròn trong tủ đồ của bạn chính là chìa khóa
-                            giúp cho bạn có thêm nhiều outfit thú vị mà lại không cần đến quá nhiều món đồ. Áo thun nữ
-                            cotton cổ tròn basic chính là vũ khí tiện dụng cho các chị em trong trang phục hàng ngày!
-                        </p>
-                        <br />
-                        <br />
-                        <p>
-                            Thiết kế đơn giản, form dáng tiện lợi của áo thun PPN4502. Tại sao chỉ với 1 chiếc áo thun
-                            nữ basic mà bạn có thể phối với 10 bộ độ khác nhau? Câu trả lời nằm ở chính sự đơn giản của
-                            chúng. Càng đơn giản, bạn lại càng dễ mix &amp; match với những món đồ khác nhau.Áo thun nữ
-                            PPM4502 có thiết kế cổ tròn đơn giản, nhẹ nhàng tôn da. Tay cáo, form áo cũng không hề cầu
-                            kỳ, rất dễ mặc với nhiều thân hình khác nhau. Đặc biệt hơn, màu sắc của chiếc áo phông nữ cổ
-                            tròn này cũng rất nhã nhặn, trung tính, trơn màu. Sự tối giản từ thiết kế, đường may đến
-                            bảng màu giúp các chị em không cần đắn đo quá nhiều khi lựa chọn. Chất liệu cotton 95% được
-                            xử lý nghiêm ngặt, quy trình và công nghệ hiện đại nên mang tới cho chiếc áo sự thoải mái,
-                            mềm mại, thoáng mát ngay khi chạm vào. Cùng với đó, áo thun nữ cotton cổ tròn Yody có khả
-                            năng thâm shuts mồ hôi rất tốt nên người mặc không bị cảm giác bí bách, dính dính trên da
-                            khi đổ mồ hôi vào mùa hè. Bên cạnh đó, sản phẩm cũng chưa 5% spandex - loại sợi giúp co
-                            giãn, đàn hồi hiệu quả thích hợp mặc tới nhiều môi trường, ngay cả khi vận động{' '}
-                        </p>
-                        <br />
-                        <br />
-                        <p>
-                            Sự hiện diện của những chiếc áo thun basic cổ tròn trong tủ đồ của bạn chính là chìa khóa
-                            giúp cho bạn có thêm nhiều outfit thú vị mà lại không cần đến quá nhiều món đồ. Áo thun nữ
-                            cotton cổ tròn basic chính là vũ khí tiện dụng cho các chị em trong trang phục hàng ngày!
-                        </p>
-                        <br />
-                        <br />
-                        <p>
-                            Thiết kế đơn giản, form dáng tiện lợi của áo thun PPN4502. Tại sao chỉ với 1 chiếc áo thun
-                            nữ basic mà bạn có thể phối với 10 bộ độ khác nhau? Câu trả lời nằm ở chính sự đơn giản của
-                            chúng. Càng đơn giản, bạn lại càng dễ mix &amp; match với những món đồ khác nhau.Áo thun nữ
-                            PPM4502 có thiết kế cổ tròn đơn giản, nhẹ nhàng tôn da. Tay cáo, form áo cũng không hề cầu
-                            kỳ, rất dễ mặc với nhiều thân hình khác nhau. Đặc biệt hơn, màu sắc của chiếc áo phông nữ cổ
-                            tròn này cũng rất nhã nhặn, trung tính, trơn màu. Sự tối giản từ thiết kế, đường may đến
-                            bảng màu giúp các chị em không cần đắn đo quá nhiều khi lựa chọn. Chất liệu cotton 95% được
-                            xử lý nghiêm ngặt, quy trình và công nghệ hiện đại nên mang tới cho chiếc áo sự thoải mái,
-                            mềm mại, thoáng mát ngay khi chạm vào. Cùng với đó, áo thun nữ cotton cổ tròn Yody có khả
-                            năng thâm shuts mồ hôi rất tốt nên người mặc không bị cảm giác bí bách, dính dính trên da
-                            khi đổ mồ hôi vào mùa hè. Bên cạnh đó, sản phẩm cũng chưa 5% spandex - loại sợi giúp co
-                            giãn, đàn hồi hiệu quả thích hợp mặc tới nhiều môi trường, ngay cả khi vận động
-                        </p>
-                    </div>
+                    <div className={cx('desc-content')} dangerouslySetInnerHTML={{ __html: product.description }}></div>
                     <div className={cx('toggle-desc')}>
                         <Button className="bg-blue" onClick={toggleDesc}>
                             {descBtn ? 'Thu gọn' : 'Xem thêm'}
